@@ -11,6 +11,7 @@ import componentsList from '../../../_data/react-components';
 export default class Header extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired,
+    intl: React.PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -59,8 +60,10 @@ export default class Header extends React.Component {
     const routes = this.props.routes;
     const activeMenuItem = routes[1].path || 'home';
 
+    const locale = this.context.intl.locale;
     const options = Object.keys(componentsList).map((key) => {
-      return componentsList[key];
+      const value = componentsList[key];
+      return value.localized ? value[locale] : value;
     }).filter(({ meta }) => {
       return /^component/.test(meta.fileName);
     }).map(({ meta }) => {
