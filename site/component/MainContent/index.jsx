@@ -38,7 +38,7 @@ export default class MainContent extends React.Component {
   }
 
   fileNameToPath(fileName) {
-    const snippets = fileName.replace(/(\/index)?\.md$/i, '').split('/');
+    const snippets = fileName.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').split('/');
     return snippets[snippets.length - 1];
   }
 
@@ -46,8 +46,8 @@ export default class MainContent extends React.Component {
     const key = this.fileNameToPath(item.fileName);
     const text = isTop ?
             item.chinese || item.english : [
-              <span key="english">{ item.english }</span>,
-              <span className="chinese" key="chinese">{ item.chinese }</span>
+              <span key="english">{ item.title || item.english }</span>,
+              <span className="chinese" key="chinese">{ item.subtitle || item.chinese }</span>
             ];
     const disabled = item.disabled;
     const url = item.fileName.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '');
@@ -78,7 +78,8 @@ export default class MainContent extends React.Component {
             })
             .map((type, index) => {
               const groupItems = obj[type].sort((a, b) => {
-                return a.english.charCodeAt(0) - b.english.charCodeAt(0);
+                return (a.title || a.english).charCodeAt(0) -
+                  (b.title || b.english).charCodeAt(0);
               }).map(this.generateMenuItem.bind(this, false));
 
               return (
