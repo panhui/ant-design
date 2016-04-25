@@ -72,7 +72,7 @@ ReactDOM.render(
 );
 ````
 
-```css
+<style>
 #components-button-demo-button-group h4 {
   margin: 16px 0;
   font-size: 14px;
@@ -89,4 +89,4 @@ ReactDOM.render(
   margin-bottom: 12px;
   margin-right: 0;
 }
-```
+</style>
